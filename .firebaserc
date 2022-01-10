@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "diariocalendario-1c657": {
+      "hosting": {
+        "diarioCalendario": [
+          "diariocalendario-1c657"
+        ]
+      }
+    }
+  }
+}

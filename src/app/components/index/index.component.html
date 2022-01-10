@@ -1,0 +1,21 @@
+
+<div class="container">
+
+    <mat-form-field class="full-width" appearance="fill">
+      <input matInput [(ngModel)]="titulo" placeholder="Escribe tu titulo" type="text" />
+    </mat-form-field>
+    
+   <!--  <input type="text" #newitem />
+    <button (click)="addItem(newitem.value)">Add</button> -->
+      <angular-editor [(ngModel)]="htmlContent" [config]="config"></angular-editor>
+   <!--  <h5 class="html-header">HTML Output</h5> -->
+    <!-- <div class="html">
+      {{ htmlContent }}
+    </div> -->
+    
+ </div>
+ <button (click)="accion()">Guardar</button>
+ <button (click)="openCalendario()">Calendario</button>
+ <button (click)="logout()">logout</button> 
+
+  

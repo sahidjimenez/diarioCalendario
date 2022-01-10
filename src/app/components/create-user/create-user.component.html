@@ -1,0 +1,41 @@
+
+<form  [formGroup]="loginForm" (ngSubmit)="guardar(loginForm)">
+    <div class="botones" >
+        <h1>Crear cuenta</h1>
+        <mat-form-field>
+            <mat-label>Nombre</mat-label>
+            <input matInput type="nombre" formControlName="nombre">
+            <mat-error >Ingresa un nombre real</mat-error>
+        </mat-form-field>
+
+        <br>
+        <mat-form-field>
+            <mat-label>Correo electrónico</mat-label>
+
+            <input formControlName="correo" type="mail" matInput >
+            <mat-error >Ingresa un correo valido</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+            <mat-label>Contraseña</mat-label>
+
+            <input formControlName="password" type="password" matInput >
+            <mat-error >Ingresa un correo valido</mat-error>
+        </mat-form-field>
+        <br>
+
+    <button type="submit" class="verde" [disabled]="loginForm.invalid"  mat-raised-button>Crear</button>
+    <br>
+    <button type="submit" class="verde" (click)="ir()"  mat-raised-button>Ya tengo con cuenta</button>
+    </div>
+    <br>
+    <div class="botones">
+        <p>Iniciar sesión con</p>
+        <button (click)="crear()">Facebook</button>
+      
+    </div>
+   <!--  <div class="botones">
+        <button (click)="logout()">Logout</button>
+    </div> -->
+
+</form>  
