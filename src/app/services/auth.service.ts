@@ -32,7 +32,7 @@ export class AuthService {
   crearUsuarioFacebook() {
     this.auth.signInWithPopup(new firebase.auth.FacebookAuthProvider())
     .then( fbUser =>{
-      console.log(fbUser);
+     /*  console.log(fbUser); */
       const uid:any = fbUser.user?.uid;
       const nombre = fbUser.user?.displayName;
       const email = fbUser.user?.email;
@@ -69,7 +69,7 @@ export class AuthService {
   }
   logout(){
     this.auth.signOut();
-    console.log('Logout')
+    console.log('Logout');
   }
   isAuth(){
     return this.auth.authState.pipe(

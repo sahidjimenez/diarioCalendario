@@ -24,14 +24,16 @@
         </mat-form-field>
         <br>
 
+        <p class="error">{{error}}</p>
     <button type="submit" class="verde" [disabled]="loginForm.invalid"  mat-raised-button>Iniciar sesión</button>
+    <br>
     <br>
     <button type="submit" class="verde" (click)="ir()"  mat-raised-button>Crear Cuenta</button>
     
     </div>
     <br>
     <div class="botones">
-        <p>Iniciar sesión con</p>
+        <p>Iniciar sesión</p>
         <button (click)="crear()">Facebook</button>
       
     </div>

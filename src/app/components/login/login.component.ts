@@ -10,6 +10,7 @@ import { FormGroup, FormControl, FormBuilder, FormArray, Validators, AbstractCon
 })
 export class LoginComponent implements OnInit {
 
+  error:string;
   loginForm: FormGroup;
   constructor(public fb: FormBuilder,public ser:AuthService,private router:Router,private route:Router) {
 
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
       correo: new FormControl('' , Validators.required ),
       password: new FormControl('' , Validators.required ),
     });
+    this.error= '';
    }
 
   ngOnInit(): void {
@@ -31,11 +33,14 @@ export class LoginComponent implements OnInit {
     const {correo,password}= this.loginForm.value;
     this.ser.login(correo,password).
     then(credenciales =>{
-      console.log(credenciales);
+      /* console.log(credenciales); */
       this.router.navigate(['/']);
     })
     .catch(err=>{
-      console.log(err);
+    /*   console.log(err);
+      console.log(err.code);
+ */
+      this.error='Credenciales incorrectos';
     })
   }
   logout(){
@@ -48,7 +53,7 @@ export class LoginComponent implements OnInit {
     const {nombre,correo,password}= this.loginForm.value;
     this.ser.crearcuentacorreo(nombre,correo,password).
     then(credenciales =>{
-      console.log(credenciales);
+      /* console.log(credenciales); */
       this.router.navigate(['/']);
     })
     .catch(err=>{

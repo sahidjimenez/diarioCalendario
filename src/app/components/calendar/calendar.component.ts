@@ -95,7 +95,7 @@ export class CalendarComponent implements OnInit {
   handleDateClick(arg:any) {
 
     /* solo funciona cuando se selecciona un espacio vacio y se obtiene la fecha para crear un nuevo texto  */
-    console.log('Agregar nuevo event')
+    /* console.log('Agregar nuevo event'); */
     /* console.log(arg); */
     let fechaSeleccionado = arg.dateStr;
     let horainicio = '01:00:00';
@@ -124,8 +124,8 @@ export class CalendarComponent implements OnInit {
   modificar(arg:any){
     
     /* Sirve para modificar el texto del dia seleccionado */
-    console.log('funcion para modificar ')
-    console.log(arg);
+    /* console.log('funcion para modificar ')
+    console.log(arg); */
     let fechaSeleccionado = arg.event._def.extendedProps.fecha;
     let textoSeleccionado = arg.event._def.extendedProps.texto;
     let uidSeleccionado = arg.event._def.extendedProps.uid;

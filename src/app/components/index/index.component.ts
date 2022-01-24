@@ -68,26 +68,29 @@ export class IndexComponent implements OnInit {
     this.uidUsuario = this.ser.user.uid;
     /* console.log(this.uidUsuario); */
     const fechaHoy  = new Date();
-    var day = fechaHoy.getDate();
+    const day = fechaHoy.getDate();
     let dayMod:string ='';
-    var month1 = 1 +fechaHoy.getMonth();
+    const month = 1 +fechaHoy.getMonth();
     let monthMod:string ='';
-     this.uidgenerado = this.afs.createId();
+    const year = fechaHoy.getFullYear();
     var cero:any = '';
     if(day<=9){
-      cero=0;
+      dayMod='0'+day;
     }else{
-      cero='';
+      dayMod=''+day;
     }
-    if(month1<=9){
-      cero=0;
+    if(month<=9){
+      monthMod='0'+month;
     }else{
-      cero='';
+      monthMod=''+month;
     }
     
-    const month = 1 +fechaHoy.getMonth();
-    const year = fechaHoy.getFullYear();
-    let fechaFCHoy = year + '-' +cero+ month + '-' + cero +day;
+    let fechaFCHoyy = year + '-' + monthMod + '-'+ dayMod;
+    
+    let horainicio = '00:00:00';
+    let horaend = '24:00:00'
+    let start = fechaFCHoyy+'T'+horainicio;
+    let end = fechaFCHoyy+'T'+horaend;
 
     this.itemsRef = db.list('fechas');
     
@@ -108,15 +111,18 @@ export class IndexComponent implements OnInit {
         })
       )
       .subscribe( data => {
-        console.log(data);
+        /* console.log(data); */
         this.fecha = data;
         
-        this.buscar = this.fecha.filter((date:any) =>date.date == fechaFCHoy);
-        console.log(this.buscar);
+        this.buscar = this.fecha.filter((date:any) =>date.date == fechaFCHoyy);
+        /* console.log(this.buscar); */
+        
         this.titulo = this.buscar[0]?.title;
         this.uidFechaHoy = this.buscar[0]?.uid;
         this.htmlContent = this.buscar[0]?.extendedProps.texto;
-          
+
+        this.fechaFCHoy = this.buscar[0]?.date;
+        /* console.log(this.uidFechaHoy); */
       });
       /* hacer se unsubscribe para que sea solo una vez
       this.firebaseData.unsubscribe();
@@ -124,11 +130,15 @@ export class IndexComponent implements OnInit {
       this.ser.initFechas(this.uidUsuario);
 
       
-      console.log(this.htmlContent);
+     /*  console.log(this.htmlContent); */
 
   }
 
   ngOnInit(): void {
+  }
+  ngOnDestroy(){
+    this.firebaseData.unsubscribe();
+
   }
   accion(){
     /* const uid = this.ser.user.uid; */
@@ -143,39 +153,45 @@ export class IndexComponent implements OnInit {
     if(day<=9){
       dayMod='0'+day;
     }else{
-      dayMod='';
+      dayMod=''+day;
     }
     if(month<=9){
       monthMod='0'+month;
     }else{
-      monthMod='';
+      monthMod=''+month;
     }
     
-    let fechaFCHoy = year + '-' + monthMod + '-'+ dayMod;
+    let fechaFCHoyy = year + '-' + monthMod + '-'+ dayMod;
+    
     let horainicio = '00:00:00';
     let horaend = '24:00:00'
-    let start = fechaFCHoy+'T'+horainicio;
-    let end = fechaFCHoy+'T'+horaend;
+    let start = fechaFCHoyy+'T'+horainicio;
+    let end = fechaFCHoyy+'T'+horaend;
 
     /* El uid del evento se debe generar para que se vayan guardando uno por uno */
 
     if(this.htmlContent){
-      if(this.uidFechaHoy){
+      if(this.uidFechaHoy ){
 
   
-        console.log(this.uidFechaHoy)
+        /* console.log(this.uidFechaHoy) */
        
         this.afs.doc(`${ this.uidUsuario }/fechas`).collection('fechas1').doc(`${ this.uidFechaHoy }`).update({title:this.titulo,extendedProps:{texto:this.htmlContent,titulo:this.titulo,fecha:this.fechaFCHoy }})
-        .then((ref)=>console.log('exito',ref))
+        .then((ref)=>console.log('exito!'/* ,ref */))
         .catch(err=>this.afs.doc(`${ this.uidUsuario }/fechas`).collection('fechas1').add({title:this.titulo, date: this.fechaFCHoy,start:this.start,end:this.end,extendedProps:{texto:this.htmlContent,titulo:this.titulo,fecha:this.fechaFCHoy } }));
 
 
       }else{
 
-       
-        this.afs.doc(`${ this.uidUsuario }/fechas`).collection('fechas1').add({title:this.titulo, date: this.fechaFCHoy,start:start,end:end,extendedProps:{texto:this.htmlContent,titulo:this.titulo,fecha:this.fechaFCHoy } })
+        /* console.log(fechaFCHoyy) */
+
+        this.afs.doc(`${ this.uidUsuario }/fechas`).collection('fechas1').add({title:this.titulo, date: fechaFCHoyy,start:start,end:end,extendedProps:{texto:this.htmlContent,titulo:this.titulo,fecha:fechaFCHoyy } })
         .then((ref)=>console.log('Exito!',ref))
         .catch( err=> console.log(err));
+
+      /*   console.log(this.fechaFCHoy) */
+
+        
       }
     }else{
       console.log('no hay datos')
@@ -194,7 +210,7 @@ export class IndexComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       data => {
         if(data != undefined){
-          console.log(data);
+          /* console.log(data); */
           if(data.uid && data.titulo && data.texto){
             this.uidFechaHoy = data.uid;
             this.titulo = data.titulo;
